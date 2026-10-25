@@ -159,18 +159,26 @@
     .hero__panel { display: flex; align-items: center; padding: calc(var(--header) + 32px) clamp(48px, 5.5vw, 100px) 64px; }
   }
 
-  /* «Софья — репетитор»: parsed like a sentence at school — subject one line, predicate two */
-  .parse { font-family: var(--serif); font-weight: 600; line-height: 1; letter-spacing: -.015em; }
+  /* «Софья — репетитор»: parsed like a sentence at school — subject one line, predicate two.
+     Labels sit just above the real ink of each word (measured: «Софья» ink starts .08em below the
+     top of its line box, lowercase «репетитор» .38em), underlines skip the descenders of ф and р. */
+  .parse { --fs-s: clamp(44px, 4.3vw, 64px); --fs-p: clamp(66px, 7.9vw, 124px); --gap: clamp(16px, 1.6vw, 24px); --lab: 33px; /* label height + its offset */ font-family: var(--serif); font-weight: 600; line-height: 1; letter-spacing: -.015em; }
   .parse__row { display: block; }
-  .parse__row--subj { margin-top: 30px; font-size: clamp(44px, 4.3vw, 64px); }
-  .parse__row--pred { margin-top: 44px; font-size: clamp(66px, 7.9vw, 124px); line-height: .95; }
-  .parse__w { position: relative; display: inline-block; }
+  /* tablets: the text panel is full width, so the headline can be larger */
+  @media (min-width: 640px) and (max-width: 1099px) { .parse { --fs-s: clamp(44px, 6vw, 60px); --fs-p: clamp(66px, 11.5vw, 116px); } }
+  .parse__row--subj { margin-top: 30px; font-size: var(--fs-s); }
+  /* the same clear gap between the first line and the second label at every size */
+  .parse__row--pred { margin-top: calc(var(--gap) + var(--lab) - var(--fs-p) * .38); font-size: var(--fs-p); }
+  .parse__w {
+    position: relative; display: inline-block;
+    text-decoration-line: underline; text-decoration-color: var(--peach); text-decoration-skip-ink: auto;
+  }
+  .parse__w--one { --ink: calc(var(--fs-s) * .08); text-decoration-thickness: 3px; text-underline-offset: .15em; }
+  .parse__w--two { --ink: calc(var(--fs-p) * .38); text-decoration-style: double; text-decoration-thickness: 3px; text-underline-offset: .13em; }
   .parse__w i {
-    position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 6px;
+    position: absolute; left: 50%; top: var(--ink); transform: translate(-50%, calc(-100% - 7px));
     font: 700 26px/1 var(--hand); font-style: normal; letter-spacing: 0; color: var(--peach); white-space: nowrap;
   }
-  .parse__w--one::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -.1em; height: 3px; border-radius: 2px; background: var(--peach); }
-  .parse__w--two::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -.17em; height: 11px; background: linear-gradient(var(--peach) 0 3px, transparent 3px 8px, var(--peach) 8px 11px); }
   .parse__rest { display: block; margin-top: 34px; max-width: 16em; font: italic 500 clamp(23px, 2.2vw, 31px)/1.25 var(--serif); letter-spacing: 0; color: var(--peach-2); text-wrap: balance; }
   /* facts look like notes stuck on the page, not like buttons */
   .hero__facts { list-style: none; padding: 0; margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px 16px; }
@@ -180,8 +188,9 @@
   .hero .btn--ghost { --f: var(--on-green); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .35); }
   .hero .btn--ghost:hover { --b: rgba(246, 241, 231, .08); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .5); }
   @media (max-width: 639px) {
-    .parse__w i { font-size: 22px; }
-    .parse__row--pred { margin-top: 38px; }
+    .parse { --lab: 27px; }
+    .parse__w--one, .parse__w--two { text-decoration-thickness: 2.5px; }
+    .parse__w i { font-size: 22px; transform: translate(-50%, calc(-100% - 5px)); }
     .hero__facts li { font-size: 22px; }
     .hero__cta .btn { height: 50px; padding: 0 20px; font-size: 15px; }
   }
