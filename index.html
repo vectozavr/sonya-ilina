@@ -136,13 +136,17 @@
     content: ""; position: absolute; z-index: -1; right: -10%; top: -10%; width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
     background: radial-gradient(closest-side, rgba(247, 217, 199, .55), rgba(247, 217, 199, 0)); pointer-events: none;
   }
-  .hero__grid { display: grid; grid-template-areas: "intro" "photo" "toc"; gap: clamp(40px, 6vw, 72px) clamp(48px, 7vw, 104px); align-items: center; }
+  .hero__grid { display: grid; grid-template-areas: "intro" "photo" "toc"; gap: clamp(40px, 6vw, 72px); align-items: center; }
   .hero__intro { grid-area: intro; }
   .hero__toc { grid-area: toc; }
   .portrait { grid-area: photo; }
-  @media (min-width: 960px) {
-    .hero__grid { grid-template-columns: 1.1fr .9fr; grid-template-areas: "intro photo" "toc photo"; row-gap: 0; }
-    .hero__toc { align-self: end; }
+  @media (min-width: 1100px) {
+    /* the photo is a panel glued to the right edge of the window; text keeps clear of it */
+    .hero { --photo-w: clamp(400px, 45vw, 880px); min-height: min(100vh, 940px); display: flex; align-items: center; }
+    .hero__grid {
+      grid-template-areas: "intro" "toc"; row-gap: clamp(32px, 4vw, 56px);
+      padding-right: calc(var(--photo-w) - (100vw - min(1200px, 100vw - 2 * var(--gutter))) / 2 + clamp(48px, 5vw, 88px));
+    }
   }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 12px;
@@ -177,13 +181,15 @@
   .toc a:hover .toc__dots { border-bottom-color: var(--green-3); }
   .toc a:hover .i { transform: translateX(3px); color: var(--green-3); }
 
-  .portrait { position: relative; justify-self: center; width: min(100%, 470px); margin: 0; isolation: isolate; }
-  .portrait__frame { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; background: var(--paper); }
-  .portrait__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; transform: scale(1.08); transition: transform 1.8s var(--ease); }
+  /* phones: edge-to-edge photo; desktop: tall panel on the right */
+  .portrait { position: relative; margin: 0 calc(-1 * var(--gutter)); }
+  .portrait__frame { position: relative; height: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper); }
+  .portrait__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 30%; transform: scale(1.06); transition: transform 1.8s var(--ease); }
   .is-loaded .portrait__frame img { transform: scale(1); }
-  .portrait::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    border: 1px solid var(--peach); border-radius: 999px 999px 28px 28px; transform: translate(16px, 16px);
+  @media (min-width: 640px) and (max-width: 1099px) { .portrait__frame { aspect-ratio: 3 / 2; } }
+  @media (min-width: 1100px) {
+    .portrait { position: absolute; top: calc(var(--header) + 8px); right: 0; bottom: clamp(28px, 3vw, 48px); width: var(--photo-w); margin: 0; }
+    .portrait__frame { aspect-ratio: auto; border-radius: clamp(28px, 3vw, 44px) 0 0 clamp(28px, 3vw, 44px); }
   }
   .portrait__badge {
     position: absolute; left: 14px; bottom: 28px;
@@ -193,8 +199,8 @@
   }
   .portrait__badge b { font: 600 40px/1 var(--serif); letter-spacing: -.01em; color: var(--green-3); white-space: nowrap; }
   .portrait__badge span { font-size: 13px; line-height: 1.35; color: var(--ink-2); }
-  @media (min-width: 960px) { .portrait__badge { left: -32px; bottom: 44px; } }
-  @media (max-width: 959px) { .portrait { width: min(100%, 400px); } }
+  .portrait__badge { left: var(--gutter); bottom: 20px; }
+  @media (min-width: 1100px) { .portrait__badge { left: -40px; bottom: 56px; } }
 
   /* ───── sections ───── */
   .section { position: relative; padding: clamp(76px, 10vw, 140px) 0; }
@@ -239,8 +245,18 @@
   /* about */
   .about { display: grid; gap: clamp(36px, 6vw, 96px); margin-top: clamp(40px, 5vw, 64px); }
   .about__photo { margin: 0; width: min(100%, 440px); }
+  .about__photo .quote { margin-top: 28px; font-size: clamp(21px, 1.9vw, 26px); }
   .about__photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: clamp(20px, 2.4vw, 28px); background: var(--paper); }
-  .about__body { display: grid; gap: clamp(40px, 5vw, 64px); }
+  .about__body { display: grid; gap: clamp(36px, 4vw, 52px); }
+  .about__sub { font: 600 clamp(25px, 2.3vw, 30px)/1.15 var(--serif); }
+  .points { list-style: none; padding: 0; margin-top: 10px; }
+  .points li { display: grid; grid-template-columns: 32px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
+  .points li:first-child { border-top: 1px solid var(--line); margin-top: 14px; }
+  .points b { color: var(--ink); font-weight: 600; }
+  .points .check { margin-top: -2px; }
+  .about .dotlist { margin-top: 22px; }
+  .about__note { display: flex; align-items: center; gap: 14px; font-size: 16px; color: var(--ink-2); }
+  .about__note::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--peach); flex: none; }
   @media (min-width: 960px) {
     .about { grid-template-columns: 5fr 7fr; align-items: start; }
     .about__photo { position: sticky; top: calc(var(--header) + 32px); width: 100%; }
@@ -258,20 +274,6 @@
   .dotlist li::before { content: ""; position: absolute; left: 2px; top: .66em; width: 8px; height: 8px; border-radius: 50%; background: var(--peach); }
   .dotlist b { font-weight: 600; }
   .dotlist span { color: var(--ink-2); }
-
-  /* approach */
-  .steps { display: grid; margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line-on-green); }
-  @media (min-width: 820px) { .steps { grid-template-columns: 1fr 1fr; } }
-  .step { display: grid; grid-template-columns: 52px 1fr; gap: 16px; padding: clamp(28px, 3.4vw, 46px) 0; border-bottom: 1px solid var(--line-on-green); }
-  @media (min-width: 820px) {
-    .step:nth-child(odd) { padding-right: clamp(24px, 4vw, 56px); border-right: 1px solid var(--line-on-green); }
-    .step:nth-child(even) { padding-left: clamp(24px, 4vw, 56px); }
-  }
-  .step__num { font: italic 500 32px/1.05 var(--serif); color: var(--peach); }
-  .step h3 { font: 600 clamp(25px, 2.4vw, 31px)/1.15 var(--serif); }
-  .step p { margin-top: 12px; max-width: 30em; font-size: 16.5px; color: var(--on-green-2); }
-  .note { display: flex; align-items: center; gap: 14px; margin-top: 40px; font-size: 16px; color: var(--on-green-2); }
-  .note::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--peach); flex: none; }
 
   /* results + reviews */
   .results { display: grid; gap: 28px 64px; margin-top: clamp(40px, 5vw, 64px); align-items: end; }
@@ -382,6 +384,9 @@
   }
   .vmodal__close:hover { transform: rotate(90deg); }
 
+  .section--paper { background: var(--paper); }
+  .section--paper .card { background: var(--bg); }
+
   /* faq */
   .faq { max-width: 940px; margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line-on-green); }
   .faq__item { border-bottom: 1px solid var(--line-on-green); }
@@ -484,7 +489,6 @@
     <nav class="nav" aria-label="Разделы">
       <a href="#services">Услуги и&nbsp;цены</a>
       <a href="#about">Обо мне</a>
-      <a href="#approach">Подход</a>
       <a href="#reviews">Отзывы</a>
       <a href="#faq">Вопросы</a>
       <a href="#contacts">Контакты</a>
@@ -518,7 +522,7 @@
 
       <figure class="portrait" data-reveal style="--i:1">
         <div class="portrait__frame">
-          <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1080" height="1350" fetchpriority="high">
+          <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1600" height="1500" fetchpriority="high">
         </div>
         <figcaption class="portrait__badge">
           <b>91–97</b>
@@ -531,10 +535,9 @@
         <ol>
           <li><a href="#services"><span class="toc__num">01</span><span class="toc__label">Услуги и&nbsp;цены</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
           <li><a href="#about"><span class="toc__num">02</span><span class="toc__label">Обо мне</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#approach"><span class="toc__num">03</span><span class="toc__label">Как я&nbsp;занимаюсь</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#reviews"><span class="toc__num">04</span><span class="toc__label">Отзывы и&nbsp;результаты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#faq"><span class="toc__num">05</span><span class="toc__label">Частые вопросы</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#contacts"><span class="toc__num">06</span><span class="toc__label">Контакты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#reviews"><span class="toc__num">03</span><span class="toc__label">Отзывы и&nbsp;результаты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#faq"><span class="toc__num">04</span><span class="toc__label">Частые вопросы</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#contacts"><span class="toc__num">05</span><span class="toc__label">Контакты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
         </ol>
       </nav>
     </div>
@@ -572,7 +575,7 @@
     </div>
   </section>
 
-  <!-- ───── 3. Обо мне ───── -->
+  <!-- ───── 3. Обо мне (опыт + подход) ───── -->
   <section class="section" id="about">
     <div class="container">
       <div data-reveal>
@@ -581,65 +584,46 @@
       </div>
       <div class="about">
         <figure class="about__photo" data-reveal>
-          <img src="about.jpg" alt="Софья со справочником по литературе" width="960" height="1200" loading="lazy">
+          <img src="about.jpg" alt="Софья со справочником по литературе" width="1500" height="1875" loading="lazy">
+          <figcaption class="quote">Мне важно объяснять не&nbsp;только «что нужно знать», но&nbsp;и&nbsp;зачем это нужно.</figcaption>
         </figure>
         <div class="about__body">
-        <div class="about__text" data-reveal>
-          <p>Преподаю русский язык с&nbsp;2014&nbsp;года. За&nbsp;это время со&nbsp;мной занимались больше ста учеников 3–11&nbsp;классов&nbsp;— с&nbsp;самыми разными запросами: от&nbsp;пробелов в&nbsp;программе до&nbsp;подготовки к&nbsp;ОГЭ и&nbsp;ЕГЭ.</p>
-          <p>Раскладываю материал по&nbsp;полочкам, чтобы ученик понимал логику языка и&nbsp;увереннее чувствовал себя на&nbsp;контрольных и&nbsp;экзаменах.</p>
-          <blockquote class="quote">Мне важно объяснять не&nbsp;только «что нужно знать», но&nbsp;и&nbsp;зачем это нужно.</blockquote>
-        </div>
-        <div data-reveal style="--i:1">
-          <div class="stats">
+          <div class="about__text" data-reveal>
+            <p>Преподаю русский язык с&nbsp;2014&nbsp;года. Раскладываю материал по&nbsp;полочкам, чтобы ученик понимал логику языка и&nbsp;увереннее чувствовал себя на&nbsp;контрольных и&nbsp;экзаменах.</p>
+          </div>
+          <div class="stats" data-reveal>
             <div class="stat"><div class="stat__num" data-count="12">12</div><div class="stat__label">лет преподавания</div></div>
             <div class="stat"><div class="stat__num" data-count="100" data-suffix="+">100+</div><div class="stat__label">учеников</div></div>
             <div class="stat"><div class="stat__num" data-count="97" data-from="91" data-prefix="91–">91–97</div><div class="stat__label">баллов на&nbsp;ЕГЭ у&nbsp;учеников</div></div>
           </div>
-          <ul class="dotlist">
-            <li><b>Авторский курс по&nbsp;орфографии и&nbsp;пунктуации</b> <span>— с&nbsp;таблицами, видеоматериалами и&nbsp;разборами заданий</span></li>
-            <li><b>Собственные материалы для работы на&nbsp;уроке</b> <span>— в&nbsp;том числе презентации по&nbsp;заданиям ЕГЭ</span></li>
-            <li><b>Пишу и&nbsp;редактирую художественные тексты</b> <span>— поэтому особенно внимательно работаю с&nbsp;сочинениями</span></li>
-          </ul>
-        </div>
+          <div data-reveal>
+            <h3 class="about__sub">Как я&nbsp;занимаюсь</h3>
+            <ul class="points">
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Учу понимать, а&nbsp;не&nbsp;зубрить.</b> Объясняю логику правил и&nbsp;задаю наводящие вопросы, чтобы ученик учился самостоятельно находить решение.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Без давления и&nbsp;страха ошибок.</b> Спокойно разбираем ошибки и&nbsp;возвращаемся к&nbsp;сложным темам столько, сколько нужно.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Системная подготовка.</b> Последовательно закрываем пробелы, закрепляем теорию и&nbsp;отрабатываем её&nbsp;на&nbsp;практике.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Гибкая система.</b> Подстраиваю объём занятий и&nbsp;формат домашних заданий под нагрузку и&nbsp;график ученика.</div></li>
+            </ul>
+          </div>
+          <div data-reveal>
+            <h3 class="about__sub">Свои материалы</h3>
+            <ul class="dotlist">
+              <li><b>Авторский курс по&nbsp;орфографии и&nbsp;пунктуации</b> <span>— с&nbsp;таблицами, видеоматериалами и&nbsp;разборами заданий</span></li>
+              <li><b>Презентации по&nbsp;каждому заданию ЕГЭ</b> <span>и&nbsp;собственные материалы для работы на&nbsp;уроке</span></li>
+              <li><b>Пишу и&nbsp;редактирую художественные тексты</b> <span>— поэтому особенно внимательно работаю с&nbsp;сочинениями</span></li>
+            </ul>
+          </div>
+          <p class="about__note" data-reveal>Родителям&nbsp;— обратная связь по&nbsp;результатам занятий.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ───── 4. Как я занимаюсь ───── -->
-  <section class="section section--green" id="approach">
+  <!-- ───── 4. Отзывы и результаты ───── -->
+  <section class="section section--paper" id="reviews">
     <div class="container">
       <div data-reveal>
-        <p class="label"><span class="label__num">03</span>Как я&nbsp;занимаюсь</p>
-        <h2 class="h2">Спокойно, системно <em>и&nbsp;с&nbsp;пониманием</em></h2>
-      </div>
-      <div class="steps">
-        <article class="step" data-reveal>
-          <span class="step__num">01</span>
-          <div><h3>Учу понимать, а&nbsp;не&nbsp;зубрить</h3><p>Объясняю логику правил и&nbsp;задаю наводящие вопросы, чтобы ученик учился самостоятельно находить решение.</p></div>
-        </article>
-        <article class="step" data-reveal style="--i:1">
-          <span class="step__num">02</span>
-          <div><h3>Без давления и&nbsp;страха ошибок</h3><p>Спокойно разбираем ошибки и&nbsp;возвращаемся к&nbsp;сложным темам столько, сколько нужно.</p></div>
-        </article>
-        <article class="step" data-reveal>
-          <span class="step__num">03</span>
-          <div><h3>Системная подготовка</h3><p>Последовательно закрываем пробелы, закрепляем теорию и&nbsp;отрабатываем её&nbsp;на&nbsp;практике.</p></div>
-        </article>
-        <article class="step" data-reveal style="--i:1">
-          <span class="step__num">04</span>
-          <div><h3>Гибкая система</h3><p>Подстраиваю объём занятий и&nbsp;формат домашних заданий под нагрузку и&nbsp;график ученика.</p></div>
-        </article>
-      </div>
-      <p class="note" data-reveal>Родителям&nbsp;— обратная связь по&nbsp;результатам занятий.</p>
-    </div>
-  </section>
-
-  <!-- ───── 5. Отзывы и результаты ───── -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <div data-reveal>
-        <p class="label"><span class="label__num">04</span>Отзывы и&nbsp;результаты</p>
+        <p class="label"><span class="label__num">03</span>Отзывы и&nbsp;результаты</p>
         <h2 class="h2">Результаты учеников</h2>
       </div>
       <div class="results">
@@ -662,11 +646,11 @@
     </div>
   </section>
 
-  <!-- ───── 6. Частые вопросы ───── -->
+  <!-- ───── 5. Частые вопросы ───── -->
   <section class="section section--green" id="faq">
     <div class="container">
       <div data-reveal>
-        <p class="label"><span class="label__num">05</span>Частые вопросы</p>
+        <p class="label"><span class="label__num">04</span>Частые вопросы</p>
         <h2 class="h2">Ответы на&nbsp;частые вопросы</h2>
       </div>
       <div class="faq">
@@ -694,12 +678,12 @@
     </div>
   </section>
 
-  <!-- ───── 7. Контакты ───── -->
+  <!-- ───── 6. Контакты ───── -->
   <section class="section section--contacts" id="contacts">
     <div class="container">
       <div class="contact" data-reveal>
         <div>
-          <p class="label"><span class="label__num">06</span>Контакты</p>
+          <p class="label"><span class="label__num">05</span>Контакты</p>
           <h2 class="h2">Записаться <em>на&nbsp;занятие</em></h2>
           <p class="lead">Напишите или позвоните, чтобы записаться на&nbsp;занятие.</p>
           <p class="contact__hours">Онлайн с&nbsp;10:00 до&nbsp;21:00 по&nbsp;московскому времени</p>
@@ -742,10 +726,9 @@
     <ol>
       <li style="--i:0"><a href="#services" data-menu-close><span class="toc__num">01</span><span class="toc__label">Услуги и&nbsp;цены</span><span class="toc__dots"></span></a></li>
       <li style="--i:1"><a href="#about" data-menu-close><span class="toc__num">02</span><span class="toc__label">Обо мне</span><span class="toc__dots"></span></a></li>
-      <li style="--i:2"><a href="#approach" data-menu-close><span class="toc__num">03</span><span class="toc__label">Как я&nbsp;занимаюсь</span><span class="toc__dots"></span></a></li>
-      <li style="--i:3"><a href="#reviews" data-menu-close><span class="toc__num">04</span><span class="toc__label">Отзывы</span><span class="toc__dots"></span></a></li>
-      <li style="--i:4"><a href="#faq" data-menu-close><span class="toc__num">05</span><span class="toc__label">Вопросы</span><span class="toc__dots"></span></a></li>
-      <li style="--i:5"><a href="#contacts" data-menu-close><span class="toc__num">06</span><span class="toc__label">Контакты</span><span class="toc__dots"></span></a></li>
+      <li style="--i:2"><a href="#reviews" data-menu-close><span class="toc__num">03</span><span class="toc__label">Отзывы</span><span class="toc__dots"></span></a></li>
+      <li style="--i:3"><a href="#faq" data-menu-close><span class="toc__num">04</span><span class="toc__label">Вопросы</span><span class="toc__dots"></span></a></li>
+      <li style="--i:4"><a href="#contacts" data-menu-close><span class="toc__num">05</span><span class="toc__label">Контакты</span><span class="toc__dots"></span></a></li>
     </ol>
   </nav>
   <div class="menu__foot">
