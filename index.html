@@ -357,6 +357,36 @@
   .carousel__bar span { position: absolute; inset: 0; background: var(--green-3); transform-origin: left; transform: scaleX(var(--p, .2)); transition: transform .35s var(--ease); }
   .carousel__count { min-width: 64px; text-align: center; font: italic 500 18px/1 var(--serif); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 
+  /* intro video */
+  .section--paper { background: var(--paper); }
+  .section--video { padding: clamp(64px, 8vw, 112px) 0; }
+  .vhead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px 56px; }
+  .vhead .lead { margin-top: 0; max-width: 24em; }
+  .vplayer {
+    position: relative; overflow: hidden; margin-top: clamp(32px, 4vw, 52px);
+    border-radius: clamp(18px, 2.4vw, 28px); background: var(--bg);
+    box-shadow: 0 0 0 1px var(--line), 0 50px 90px -60px rgba(29, 52, 40, .55);
+  }
+  .vplayer video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--bg); }
+  .vplayer--wide { aspect-ratio: 16 / 9; }
+  .vplayer--tall { display: none; aspect-ratio: 9 / 16; width: min(100%, 400px); margin-inline: auto; }
+  @media (max-width: 640px) { .vplayer--wide { display: none; } .vplayer--tall { display: block; } }
+  .vplay {
+    position: absolute; inset: 0; display: grid; align-items: end; justify-items: start;
+    padding: clamp(16px, 3vw, 32px); background: linear-gradient(rgba(29, 52, 40, 0) 60%, rgba(29, 52, 40, .22));
+    transition: opacity .4s var(--ease);
+  }
+  .vplay__btn {
+    display: inline-flex; align-items: center; gap: 14px; padding: 10px 24px 10px 10px; border-radius: 999px;
+    background: rgba(251, 248, 242, .95); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    box-shadow: 0 20px 40px -18px rgba(29, 52, 40, .55); font: 600 15.5px/1 var(--sans); color: var(--ink);
+    transition: transform .45s var(--ease);
+  }
+  .vplay__icon { width: 50px; height: 50px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--green); color: var(--on-green); }
+  .vplay__icon .i { width: 20px; height: 20px; margin-left: 2px; }
+  .vplay:hover .vplay__btn { transform: scale(1.04); }
+  .vplayer.is-playing .vplay { opacity: 0; pointer-events: none; }
+
   /* faq */
   .faq { max-width: 940px; margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line-on-green); }
   .faq__item { border-bottom: 1px solid var(--line-on-green); }
@@ -446,6 +476,7 @@
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .7.8 1.1 1.4.7l9.6-6.4c.5-.4.5-1.1 0-1.4L9.4 4.9C8.8 4.5 8 4.9 8 5.6Z" fill="currentColor"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.6 4.4 4.4L19 7.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -486,7 +517,7 @@
         <p class="hero__lead" data-reveal style="--i:2">Здравствуйте, я&nbsp;Софья. Преподаю русский язык 12&nbsp;лет: готовлю к&nbsp;ОГЭ, ЕГЭ и&nbsp;ВПР, помогаю закрыть пробелы и&nbsp;разобраться со&nbsp;школьной программой.</p>
         <div class="hero__cta" data-reveal style="--i:3">
           <a class="btn" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost" href="#services">Услуги и&nbsp;цены</a>
+          <a class="btn btn--ghost" href="#video"><svg class="i"><use href="#i-play"/></svg>Видео за&nbsp;49&nbsp;секунд</a>
         </div>
       </div>
 
@@ -511,6 +542,36 @@
           <li><a href="#contacts"><span class="toc__num">06</span><span class="toc__label">Контакты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
         </ol>
       </nav>
+    </div>
+  </section>
+
+  <!-- ───── Видео-знакомство ───── -->
+  <section class="section section--paper section--video" id="video">
+    <div class="container">
+      <div class="vhead" data-reveal>
+        <div>
+          <p class="label">Видео-знакомство</p>
+          <h2 class="h2">Знакомство <em>за&nbsp;минуту</em></h2>
+        </div>
+        <p class="lead">Коротко о&nbsp;занятиях, результатах и&nbsp;стоимости&nbsp;— 49&nbsp;секунд, со&nbsp;звуком.</p>
+      </div>
+      <!-- 16:9 on wider screens, 9:16 on phones; nothing downloads until play is pressed -->
+      <div class="vplayer vplayer--wide" data-reveal style="--i:1">
+        <video playsinline preload="none" poster="video/poster-16x9.jpg" width="1920" height="1080">
+          <source src="video/sonya-16x9.mp4" type="video/mp4">
+        </video>
+        <button class="vplay" type="button" aria-label="Смотреть видео, 49 секунд">
+          <span class="vplay__btn"><span class="vplay__icon"><svg class="i"><use href="#i-play"/></svg></span>Смотреть · 0:49</span>
+        </button>
+      </div>
+      <div class="vplayer vplayer--tall" data-reveal style="--i:1">
+        <video playsinline preload="none" poster="video/poster-9x16.jpg" width="1080" height="1920">
+          <source src="video/sonya-9x16.mp4" type="video/mp4">
+        </video>
+        <button class="vplay" type="button" aria-label="Смотреть видео, 49 секунд">
+          <span class="vplay__btn"><span class="vplay__icon"><svg class="i"><use href="#i-play"/></svg></span>Смотреть · 0:49</span>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -862,10 +923,19 @@ const REVIEWS = [
 
   /* sticky "записаться" on phones: after the hero, hidden over the contacts */
   const mcta = document.querySelector('.mcta');
-  let pastHero = false, atContacts = false;
-  const sync = () => mcta.classList.toggle('is-on', pastHero && !atContacts);
+  let pastHero = false, atContacts = false, atVideo = false;
+  const sync = () => mcta.classList.toggle('is-on', pastHero && !atContacts && !atVideo);
+  new IntersectionObserver(([en]) => { atVideo = en.isIntersecting; sync(); }, { rootMargin: '-20% 0px -20% 0px' }).observe(document.getElementById('video'));
   new IntersectionObserver(([en]) => { pastHero = !en.isIntersecting; sync(); }).observe(document.querySelector('.hero__cta'));
   new IntersectionObserver(([en]) => { atContacts = en.isIntersecting; sync(); }, { rootMargin: '0px 0px -10% 0px' }).observe(document.getElementById('contacts'));
+
+  /* intro video: our play button over the poster, native controls once it runs */
+  document.querySelectorAll('.vplayer').forEach(box => {
+    const v = box.querySelector('video');
+    box.querySelector('.vplay').addEventListener('click', () => { v.controls = true; v.play(); });
+    v.addEventListener('play', () => box.classList.add('is-playing'));
+    v.addEventListener('ended', () => { box.classList.remove('is-playing'); v.controls = false; v.load(); });
+  });
 
   /* faq accordion */
   document.querySelectorAll('.faq__q').forEach(btn => btn.addEventListener('click', () => {
