@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://vectozavr.github.io/sonya-ilina/">
 <meta property="og:image" content="https://vectozavr.github.io/sonya-ilina/og.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="832">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://vectozavr.github.io/sonya-ilina/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2325412F'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' fill='%23F6F1E7'%3EС%3C/text%3E%3C/svg%3E">
@@ -237,8 +237,14 @@
   @media (max-width: 520px) { .price__row { grid-template-columns: 1fr; gap: 2px; } }
 
   /* about */
-  .about { display: grid; gap: clamp(44px, 6vw, 96px); margin-top: clamp(40px, 5vw, 64px); }
-  @media (min-width: 960px) { .about { grid-template-columns: 1fr 1fr; } }
+  .about { display: grid; gap: clamp(36px, 6vw, 96px); margin-top: clamp(40px, 5vw, 64px); }
+  .about__photo { margin: 0; width: min(100%, 440px); }
+  .about__photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: clamp(20px, 2.4vw, 28px); background: var(--paper); }
+  .about__body { display: grid; gap: clamp(40px, 5vw, 64px); }
+  @media (min-width: 960px) {
+    .about { grid-template-columns: 5fr 7fr; align-items: start; }
+    .about__photo { position: sticky; top: calc(var(--header) + 32px); width: 100%; }
+  }
   .about__text p { max-width: 34em; font-size: clamp(17px, 1.4vw, 19px); color: var(--ink-2); text-wrap: pretty; }
   .about__text p + p { margin-top: 16px; }
   .quote { margin-top: 36px; padding-left: 24px; border-left: 2px solid var(--peach); font: italic 500 clamp(23px, 2.3vw, 30px)/1.28 var(--serif); color: var(--ink); text-wrap: balance; }
@@ -512,7 +518,7 @@
 
       <figure class="portrait" data-reveal style="--i:1">
         <div class="portrait__frame">
-          <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="936" height="1170" fetchpriority="high">
+          <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1080" height="1350" fetchpriority="high">
         </div>
         <figcaption class="portrait__badge">
           <b>91–97</b>
@@ -574,6 +580,10 @@
         <h2 class="h2">Чтобы русский перестал быть набором <em>разрозненных правил</em></h2>
       </div>
       <div class="about">
+        <figure class="about__photo" data-reveal>
+          <img src="about.jpg" alt="Софья со справочником по литературе" width="960" height="1200" loading="lazy">
+        </figure>
+        <div class="about__body">
         <div class="about__text" data-reveal>
           <p>Преподаю русский язык с&nbsp;2014&nbsp;года. За&nbsp;это время со&nbsp;мной занимались больше ста учеников 3–11&nbsp;классов&nbsp;— с&nbsp;самыми разными запросами: от&nbsp;пробелов в&nbsp;программе до&nbsp;подготовки к&nbsp;ОГЭ и&nbsp;ЕГЭ.</p>
           <p>Раскладываю материал по&nbsp;полочкам, чтобы ученик понимал логику языка и&nbsp;увереннее чувствовал себя на&nbsp;контрольных и&nbsp;экзаменах.</p>
@@ -590,6 +600,7 @@
             <li><b>Собственные материалы для работы на&nbsp;уроке</b> <span>— в&nbsp;том числе презентации по&nbsp;заданиям ЕГЭ</span></li>
             <li><b>Пишу и&nbsp;редактирую художественные тексты</b> <span>— поэтому особенно внимательно работаю с&nbsp;сочинениями</span></li>
           </ul>
+        </div>
         </div>
       </div>
     </div>
