@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:title" content="Софья — репетитор по русскому языку">
-<meta property="og:description" content="3–11 классы · ОГЭ, ЕГЭ, ВПР · 12 лет преподавания">
+<meta property="og:description" content="Репетитор по русскому языку для учеников 3–11 классов · 12 лет преподавания · подготовка к ОГЭ, ЕГЭ и ВПР">
 <meta property="og:url" content="https://vectozavr.github.io/sonya-ilina/">
 <meta property="og:image" content="https://vectozavr.github.io/sonya-ilina/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2325412F'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' fill='%23F6F1E7'%3EС%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
   :root {
@@ -38,11 +38,14 @@
     --peach-ink: #B0643C;
     --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --hand: "Caveat", cursive;
     --gutter: clamp(20px, 5vw, 48px);
-    --header: 76px;
+    --bar: 64px;       /* logo row */
+    --header: 110px;   /* logo row + section strip on phones and tablets */
     --ease: cubic-bezier(.2, .7, .2, 1);
   }
 
+  @media (min-width: 1080px) { :root { --bar: 76px; --header: 76px; } }
   *, *::before, *::after { box-sizing: border-box; }
   /* lining figures everywhere: Cormorant defaults to old-style, and the `font` shorthand would reset a normal declaration */
   *, *::before, *::after { font-feature-settings: "kern", "liga", "lnum" !important; }
@@ -97,17 +100,17 @@
   .btn--sm { height: 44px; padding: 0 20px; font-size: 14.5px; }
 
   /* ───── header ───── */
-  .header { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .4s, box-shadow .4s; }
-  .header.is-scrolled {
-    background: rgba(251, 248, 242, .94);
+  .header {
+    position: fixed; inset: 0 0 auto; z-index: 50;
+    background: rgba(251, 248, 242, .96); box-shadow: 0 1px 0 var(--line);
     -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
-    box-shadow: 0 1px 0 var(--line);
+    transition: background .4s, box-shadow .4s, color .4s;
   }
-  .header__inner { height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .header__inner { height: var(--bar); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
   .logo { display: flex; flex-direction: column; line-height: 1; }
   .logo__name { font: 600 29px/1 var(--serif); letter-spacing: -.01em; }
   .logo__role { margin-top: 5px; font: 600 10.5px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
-  .nav { display: none; gap: 30px; }
+  .nav { display: none; gap: 30px; margin-left: auto; }
   .nav a { position: relative; padding: 6px 0; font-size: 14.5px; font-weight: 500; color: var(--ink-2); transition: color .25s; }
   .nav a::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
@@ -116,74 +119,71 @@
   .nav a:hover, .nav a[aria-current="true"] { color: var(--ink); }
   .nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); }
   .header__actions { display: flex; align-items: center; gap: 10px; }
-  .header__actions .btn { display: none; }
-  .menu-btn {
-    display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px;
-    border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); font-size: 14.5px; font-weight: 600;
-    background: rgba(251, 248, 242, .6);
-  }
-  .menu-btn__bars { position: relative; width: 16px; height: 8px; }
-  .menu-btn__bars::before, .menu-btn__bars::after { content: ""; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor; border-radius: 2px; }
-  .menu-btn__bars::before { top: 0; }
-  .menu-btn__bars::after { bottom: 0; }
   .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--green-3); transform-origin: left; transform: scaleX(var(--p, 0)); opacity: .9; }
-  @media (min-width: 640px) { .header__actions .btn { display: inline-flex; } }
-  @media (min-width: 1080px) { .nav { display: flex; } .menu-btn { display: none; } }
-
-  /* ───── hero ───── */
-  .hero { position: relative; padding: calc(var(--header) + clamp(24px, 6vw, 72px)) 0 clamp(56px, 8vw, 110px); overflow: hidden; }
-  .hero::before {
-    content: ""; position: absolute; z-index: -1; right: -10%; top: -10%; width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
-    background: radial-gradient(closest-side, rgba(247, 217, 199, .55), rgba(247, 217, 199, 0)); pointer-events: none;
+  /* phones and tablets: every section is one tap away in a strip under the logo */
+  .mnav { display: flex; gap: 8px; overflow-x: auto; padding: 0 var(--gutter) 10px; scrollbar-width: none; }
+  .mnav::-webkit-scrollbar { display: none; }
+  .mnav a {
+    flex: none; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 999px;
+    background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: 14px; font-weight: 600; white-space: nowrap;
   }
-  .hero__grid { display: grid; grid-template-areas: "intro" "photo" "toc"; gap: clamp(40px, 6vw, 72px); align-items: center; }
-  .hero__intro { grid-area: intro; }
-  .hero__toc { grid-area: toc; }
-  .portrait { grid-area: photo; }
+  .mnav a span { font: italic 500 15px/1 var(--serif); color: var(--peach-ink); }
+  .mnav a[aria-current="true"] { background: var(--green); color: var(--on-green); box-shadow: none; }
+  .mnav a[aria-current="true"] span { color: var(--peach); }
+  @media (max-width: 639px) { .header__actions .btn { height: 38px; padding: 0 15px; font-size: 13.5px; } }
+  @media (min-width: 1080px) { .nav { display: flex; } .mnav { display: none; } }
+  /* over the split hero the bar is transparent with light type */
   @media (min-width: 1100px) {
-    /* the photo is a panel glued to the right edge of the window; text keeps clear of it */
-    .hero { --photo-w: clamp(400px, 45vw, 880px); min-height: min(100vh, 940px); display: flex; align-items: center; }
-    .hero__grid {
-      grid-template-areas: "intro" "toc"; row-gap: clamp(32px, 4vw, 56px);
-      padding-right: calc(var(--photo-w) - (100vw - min(1200px, 100vw - 2 * var(--gutter))) / 2 + clamp(48px, 5vw, 88px));
-    }
+    .header:not(.is-scrolled) { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--on-green); }
+    .header:not(.is-scrolled) .logo { text-shadow: 0 1px 14px rgba(0, 0, 0, .4); }
+    .header:not(.is-scrolled) .logo__role, .header:not(.is-scrolled) .nav a { color: var(--on-green-2); }
+    .header:not(.is-scrolled) .nav a:hover, .header:not(.is-scrolled) .nav a[aria-current="true"] { color: var(--on-green); }
+    .header:not(.is-scrolled) .btn { --b: var(--peach); --f: var(--green); }
   }
-  .hero__title { font: 600 clamp(76px, 10vw, 148px)/.95 var(--serif); letter-spacing: -.025em; }
-  .hero__title .line { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
-  .hero__title .line > span { display: inline-block; }
-  .hero__title em { font-style: italic; font-weight: 500; color: var(--green-3); }
-  .hero__sub { margin-top: 16px; max-width: 17em; font: italic 500 clamp(25px, 2.6vw, 36px)/1.2 var(--serif); color: var(--green-3); text-wrap: balance; }
-  .hero__facts { list-style: none; padding: 0; margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
-  .hero__facts li { padding: 11px 18px; border-radius: 999px; background: var(--paper); font-size: 15px; font-weight: 600; }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
-  .js .hero__title .line > span { transform: translateY(108%); transition: transform 1.15s var(--ease); }
-  .js .hero__title .line:nth-child(2) > span { transition-delay: .12s; }
-  .is-loaded .hero__title .line > span { transform: none; }
-
-  /* table of contents — the book-like quick navigation */
-  .toc { margin-top: clamp(8px, 2vw, 56px); padding-top: 22px; border-top: 1px solid var(--line); }
-  .toc__title { margin-bottom: 6px; font: 600 11.5px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2); }
-  .toc ol { list-style: none; padding: 0; display: grid; column-gap: 44px; }
-  @media (min-width: 640px) { .toc ol { grid-template-columns: 1fr 1fr; } }
-  .toc a { display: flex; align-items: baseline; gap: 12px; padding: 13px 0; }
-  .toc__num { min-width: 22px; font: italic 500 18px/1 var(--serif); color: var(--peach-ink); }
-  .toc__label { font-size: 15.5px; font-weight: 600; transition: transform .4s var(--ease); white-space: nowrap; }
-  .toc__dots { flex: 1; min-width: 16px; border-bottom: 1.5px dotted rgba(29, 52, 40, .3); transform: translateY(-4px); transition: border-color .3s; }
-  .toc .i { width: 16px; height: 16px; align-self: center; color: var(--ink-2); transition: transform .4s var(--ease), color .3s; }
-  .toc a:hover .toc__label { transform: translateX(4px); }
-  .toc a:hover .toc__dots { border-bottom-color: var(--green-3); }
-  .toc a:hover .i { transform: translateX(3px); color: var(--green-3); }
-
-  /* phones: edge-to-edge photo; desktop: tall panel on the right */
-  .portrait { position: relative; margin: 0 calc(-1 * var(--gutter)); }
-  .portrait__frame { position: relative; height: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper); }
-  .portrait__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 30%; transform: scale(1.06); transition: transform 1.8s var(--ease); }
-  .is-loaded .portrait__frame img { transform: scale(1); }
-  @media (min-width: 640px) and (max-width: 1099px) { .portrait__frame { aspect-ratio: 3 / 2; } }
+  /* ───── hero: photo on the left (she looks to the right), text on green to the right ───── */
+  .hero { display: grid; padding-top: var(--header); background: var(--green); color: var(--on-green); }
+  .hero__photo { position: relative; margin: 0; aspect-ratio: 4 / 5; max-height: 60vh; overflow: hidden; background: #2b2b25; }
+  .hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 28%; transform: scale(1.04); transition: transform 1.8s var(--ease); }
+  .is-loaded .hero__photo img { transform: none; }
+  .hero__panel { padding: 44px var(--gutter) 60px; }
+  @media (min-width: 640px) and (max-width: 1099px) {
+    .hero__photo { aspect-ratio: 3 / 2; max-height: none; }
+    .hero__panel { padding: 56px var(--gutter) 76px; }
+  }
   @media (min-width: 1100px) {
-    .portrait { position: absolute; top: calc(var(--header) + 8px); right: 0; bottom: clamp(28px, 3vw, 48px); width: var(--photo-w); margin: 0; }
-    .portrait__frame { aspect-ratio: auto; border-radius: clamp(28px, 3vw, 44px) 0 0 clamp(28px, 3vw, 44px); }
+    .hero { grid-template-columns: 1fr 1fr; min-height: min(100vh, 960px); padding-top: 0; }
+    .hero__photo { aspect-ratio: auto; max-height: none; }
+    .hero__photo img { object-position: 26% 30%; }
+    .hero__photo::after { content: ""; position: absolute; inset: 0 0 auto; height: 160px; background: linear-gradient(rgba(14, 22, 17, .45), rgba(14, 22, 17, 0)); }
+    .hero__panel { display: flex; align-items: center; padding: calc(var(--header) + 32px) clamp(48px, 5.5vw, 100px) 64px; }
+  }
+
+  /* «Софья — репетитор»: parsed like a sentence at school — subject one line, predicate two */
+  .parse { font-family: var(--serif); font-weight: 600; line-height: 1; letter-spacing: -.015em; }
+  .parse__row { display: block; }
+  .parse__row--subj { margin-top: 30px; font-size: clamp(44px, 4.3vw, 64px); }
+  .parse__row--pred { margin-top: 44px; font-size: clamp(66px, 7.9vw, 124px); line-height: .95; }
+  .parse__w { position: relative; display: inline-block; }
+  .parse__w i {
+    position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 6px;
+    font: 700 26px/1 var(--hand); font-style: normal; letter-spacing: 0; color: var(--peach); white-space: nowrap;
+  }
+  .parse__w--one::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -.1em; height: 3px; border-radius: 2px; background: var(--peach); }
+  .parse__w--two::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -.17em; height: 11px; background: linear-gradient(var(--peach) 0 3px, transparent 3px 8px, var(--peach) 8px 11px); }
+  .parse__rest { display: block; margin-top: 34px; max-width: 16em; font: italic 500 clamp(23px, 2.2vw, 31px)/1.25 var(--serif); letter-spacing: 0; color: var(--peach-2); text-wrap: balance; }
+  /* facts look like notes stuck on the page, not like buttons */
+  .hero__facts { list-style: none; padding: 0; margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px 16px; }
+  .hero__facts li { padding: 11px 18px 12px; border-radius: 2px; background: var(--peach-2); color: var(--ink); font: 700 25px/1.05 var(--hand); box-shadow: 0 12px 18px -12px rgba(0, 0, 0, .55); transform: rotate(-1.6deg); }
+  .hero__facts li:nth-child(2) { background: var(--on-green); transform: rotate(1.3deg); }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+  .hero .btn--ghost { --f: var(--on-green); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .35); }
+  .hero .btn--ghost:hover { --b: rgba(246, 241, 231, .08); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .5); }
+  @media (max-width: 639px) {
+    .parse__w i { font-size: 22px; }
+    .parse__row--pred { margin-top: 38px; }
+    .hero__facts li { font-size: 22px; }
+    .hero__cta .btn { height: 50px; padding: 0 20px; font-size: 15px; }
   }
 
   /* ───── sections ───── */
@@ -195,31 +195,30 @@
   .section--green .h2 em { color: var(--peach); }
 
   /* services */
-  .services { display: grid; gap: clamp(44px, 6vw, 88px); }
+  .services { display: grid; gap: clamp(32px, 4vw, 64px); margin-top: clamp(36px, 4vw, 52px); }
   @media (min-width: 960px) { .services { grid-template-columns: 1.05fr .95fr; align-items: start; } }
-  .services .checklist { margin-top: clamp(36px, 4vw, 52px); }
   .checklist { list-style: none; padding: 0; }
   .checklist li {
     display: grid; grid-template-columns: 32px 1fr; gap: 18px; align-items: start;
-    padding: 22px 0; border-top: 1px solid var(--line-on-green);
+    padding: 22px 0; border-top: 1px solid var(--line);
     font-size: clamp(17px, 1.55vw, 20px); line-height: 1.45;
   }
-  .checklist li:last-child { border-bottom: 1px solid var(--line-on-green); }
+  .checklist li:last-child { border-bottom: 1px solid var(--line); }
   .check { width: 32px; height: 32px; margin-top: -3px; border-radius: 50%; display: grid; place-items: center; background: var(--peach); color: var(--green); }
   .check .i { width: 16px; height: 16px; }
   .services__aside { margin-top: 28px; color: var(--on-green-2); font-size: 15.5px; }
 
   .price {
     position: relative; padding: clamp(28px, 4vw, 44px); border-radius: 28px;
-    background: var(--bg); color: var(--ink);
-    box-shadow: 0 50px 90px -50px rgba(0, 0, 0, .55);
+    background: var(--green); color: var(--on-green);
+    box-shadow: 0 50px 90px -50px rgba(29, 52, 40, .7);
   }
-  .price__label { font: 600 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+  .price__label { font: 600 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--on-green-2); }
   .price__value { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; margin-top: 16px; }
   .price__value b { font: 600 clamp(64px, 8vw, 96px)/.9 var(--serif); letter-spacing: -.02em; white-space: nowrap; }
   .price__value .rub { font-family: var(--sans); font-weight: 500; font-size: .6em; margin-left: .08em; }
-  .price__value small { font-size: 17px; font-weight: 500; color: var(--ink-2); }
-  .price__note { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--ink-2); }
+  .price__value small { font-size: 17px; font-weight: 500; color: var(--on-green-2); }
+  .price__note { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line-on-green); font-size: 16px; color: var(--on-green-2); }
   .price .btn { width: 100%; justify-content: center; margin-top: 28px; }
 
   /* about */
@@ -248,12 +247,20 @@
   .dotlist li::before { content: ""; position: absolute; left: 2px; top: .66em; width: 8px; height: 8px; border-radius: 50%; background: var(--peach); }
   .dotlist b { font-weight: 600; }
   .dotlist span { color: var(--ink-2); }
+  .section--green .stats { border-color: var(--line-on-green); }
+  .section--green .stat + .stat { border-left-color: var(--line-on-green); }
+  .section--green .stat__num { color: var(--peach-2); }
+  .section--green .stat__label, .section--green .points li { color: var(--on-green-2); }
+  .section--green .points li { border-color: var(--line-on-green); }
+  .section--green .points b, .section--green .about__sub { color: var(--on-green); }
 
   /* reviews */
-  .carousel { margin-top: clamp(28px, 3.5vw, 48px); }
+  #reviews { padding-top: clamp(40px, 5vw, 64px); }
+  .carousel { margin-top: clamp(18px, 2.4vw, 28px); }
+  .carousel__stage { position: relative; }
   .carousel__track {
     display: grid; grid-auto-flow: column; grid-auto-columns: min(76vw, 320px); gap: 20px;
-    margin-top: 28px; margin-right: calc(50% - 50vw); padding: 4px calc(50vw - 50%) 6px 4px; margin-left: -4px;
+    margin-top: 0; margin-right: calc(50% - 50vw); padding: 4px calc(50vw - 50%) 6px 4px; margin-left: -4px;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: 4px;
     scrollbar-width: none; cursor: grab;
   }
@@ -271,7 +278,7 @@
     font-size: 13px; font-weight: 600; color: var(--ink); text-align: center;
     background: linear-gradient(rgba(251, 248, 242, 0), rgba(251, 248, 242, .96) 70%);
   }
-  .review__caption { margin-top: 18px; font: 600 23px/1.2 var(--serif); }
+  .review__caption { margin-top: 12px; font: 600 23px/1.2 var(--serif); }
   .review__note { margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
   .carousel__track { grid-template-rows: auto auto auto; }
   .review { grid-row: span 3; display: grid; grid-template-rows: subgrid; align-content: start; }
@@ -280,9 +287,10 @@
   .card__head b { display: block; font-size: 15px; font-weight: 600; line-height: 1.2; }
   .card__head small { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.3; }
   .card__ava { width: 38px; height: 38px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--peach-2); color: var(--peach-ink); font: 600 19px/1 var(--serif); }
-  .chat { flex: 1; display: flex; flex-direction: column; gap: 7px; padding: 16px 12px 18px; }
+  .chat { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 14px 12px 16px; max-height: clamp(240px, 100svh - 530px, 480px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(29, 52, 40, .25) transparent; }
+  .chat.is-more { -webkit-mask-image: linear-gradient(#000 calc(100% - 46px), transparent); mask-image: linear-gradient(#000 calc(100% - 46px), transparent); }
   .chat__date { align-self: center; margin: 2px 0 4px; padding: 4px 11px; border-radius: 999px; background: rgba(29, 52, 40, .08); font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
-  .msg { max-width: 88%; padding: 8px 12px 6px; font-size: 14px; line-height: 1.42; }
+  .msg { max-width: 88%; padding: 7px 11px 5px; font-size: 13.5px; line-height: 1.4; }
   .msg p { overflow-wrap: anywhere; }
   .msg time { display: block; margin-top: 1px; text-align: right; font-size: 10.5px; color: rgba(29, 52, 40, .45); font-variant-numeric: tabular-nums; }
   .msg--them { align-self: flex-start; background: #fff; border-radius: 16px 16px 16px 6px; box-shadow: 0 1px 0 rgba(29, 52, 40, .05); }
@@ -295,7 +303,7 @@
   .voice__wave { display: flex; align-items: center; gap: 2px; height: 20px; }
   .voice__wave i { width: 2px; border-radius: 2px; background: rgba(29, 52, 40, .38); }
   .voice__dur { font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .card__quote { flex: 1; position: relative; padding: 44px 20px 22px; }
+  .card__quote { flex: 1; position: relative; padding: 44px 20px 22px; max-height: clamp(240px, 100svh - 530px, 480px); overflow-y: auto; scrollbar-width: thin; }
   .card__quote::before { content: "«"; position: absolute; left: 18px; top: 4px; font: 500 54px/1 var(--serif); color: var(--peach); }
   .card__quote p { font: italic 500 19px/1.38 var(--serif); color: var(--ink); text-wrap: pretty; }
   .card__orig {
@@ -317,15 +325,29 @@
     padding: 8px 14px; border-radius: 999px; background: rgba(251, 248, 242, .92);
     font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2);
   }
-  .carousel__controls { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
+  .carousel__controls { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
   .arrow {
     width: 52px; height: 52px; flex: none; border-radius: 50%; display: grid; place-items: center;
     box-shadow: inset 0 0 0 1px var(--line); transition: background .3s, color .3s, box-shadow .3s, opacity .3s;
   }
   .arrow .i { width: 20px; height: 20px; }
   .arrow[data-prev] .i { transform: scaleX(-1); }
+  .arrow--over:hover:not(:disabled) { transform: translateY(-50%); }
   .arrow:hover:not(:disabled) { background: var(--green); color: var(--on-green); box-shadow: inset 0 0 0 1px var(--green); }
   .arrow:disabled { opacity: .32; cursor: default; }
+  .arrow--over {
+    position: absolute; z-index: 3; top: 44%; transform: translateY(-50%); width: 56px; height: 56px;
+    background: rgba(251, 248, 242, .86); color: var(--ink); box-shadow: 0 10px 28px -12px rgba(29, 52, 40, .55), inset 0 0 0 1px var(--line);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  }
+  .arrow--over:disabled { opacity: 0; pointer-events: none; }
+  .arrow--prev { left: calc((100% - 100vw) / 2 + 20px); }
+  .arrow--next { right: calc((100% - 100vw) / 2 + 28px); }
+  @media (max-width: 639px) {
+    .arrow--over { width: 46px; height: 46px; }
+    .arrow--prev { left: calc((100% - 100vw) / 2 + 8px); }
+    .arrow--next { right: calc((100% - 100vw) / 2 + 8px); }
+  }
   .carousel__bar { position: relative; flex: 1; height: 2px; overflow: hidden; border-radius: 2px; background: var(--line); }
   .carousel__bar span { position: absolute; inset: 0; background: var(--green-3); transform-origin: left; transform: scaleX(var(--p, .2)); transition: transform .35s var(--ease); }
   .carousel__count { min-width: 64px; text-align: center; font: italic 500 18px/1 var(--serif); color: var(--ink-2); font-variant-numeric: tabular-nums; }
@@ -373,7 +395,14 @@
 
   /* contacts */
   .contact { display: grid; gap: 40px; padding: clamp(28px, 5vw, 64px); border-radius: clamp(24px, 3vw, 36px); background: var(--paper); }
-  @media (min-width: 960px) { .contact { grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; } }
+  .contact__main { display: grid; gap: 36px; align-content: center; }
+  .contact__photo { margin: 0; overflow: hidden; border-radius: clamp(18px, 2.4vw, 26px); aspect-ratio: 4 / 5; background: var(--bg); }
+  .contact__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 20%; }
+  @media (max-width: 959px) { .contact__photo { order: -1; aspect-ratio: 4 / 3.6; } }
+  @media (min-width: 960px) {
+    .contact { grid-template-columns: 1fr 380px; gap: 64px; }
+    .contact__main { grid-template-columns: 1fr; }
+  }
   .contact .h2 { margin-top: 16px; }
   .links { display: grid; gap: 12px; }
   .link {
@@ -396,31 +425,6 @@
   .footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 28px; border-top: 1px solid var(--line); }
   .footer a:hover { color: var(--ink); }
 
-  /* mobile: full-screen menu + sticky call to action */
-  .menu {
-    position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; overflow-y: auto;
-    padding: 0 var(--gutter) calc(24px + env(safe-area-inset-bottom)); background: var(--bg);
-    opacity: 0; visibility: hidden; transition: opacity .4s var(--ease), visibility .4s;
-  }
-  .menu.is-open { opacity: 1; visibility: visible; }
-  .menu__top { height: var(--header); flex: none; display: flex; align-items: center; justify-content: space-between; }
-  .menu .toc { border-top: 0; margin-top: 8px; padding-top: 8px; }
-  .menu .toc ol { grid-template-columns: 1fr; }
-  .menu .toc a { padding: 15px 0; }
-  .menu .toc__label { font: 600 27px/1.1 var(--serif); }
-  .menu .toc li { opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .5s var(--ease); transition-delay: calc(var(--i) * 45ms + 60ms); }
-  .menu.is-open .toc li { opacity: 1; transform: none; }
-  .menu__foot { display: grid; gap: 10px; margin-top: auto; padding-top: 32px; }
-  .menu__foot .btn { justify-content: center; }
-
-  .mcta {
-    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 40;
-    transform: translateY(150%); transition: transform .55s var(--ease);
-  }
-  .mcta.is-on { transform: none; }
-  .mcta .btn { width: 100%; justify-content: center; box-shadow: 0 18px 40px -14px rgba(29, 52, 40, .55), 0 0 0 1px rgba(29, 52, 40, .06); }
-  @media (min-width: 960px) { .mcta { display: none; } }
-
   .lightbox { margin: auto; max-width: min(92vw, 560px); max-height: 92vh; padding: 0; border: 0; background: transparent; overflow: visible; }
   .lightbox::backdrop { background: rgba(18, 30, 23, .84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
   .lightbox img { max-height: calc(100vh - 140px); width: auto; margin: auto; border-radius: 16px; }
@@ -433,7 +437,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition-duration: .01ms !important; transition-delay: 0s !important; animation: none !important; }
-    .js [data-reveal], .js .hero__title .line > span, .portrait__frame img { opacity: 1; transform: none; }
+    .js [data-reveal], .hero__photo img { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -452,90 +456,81 @@
     </a>
     <nav class="nav" aria-label="Разделы">
       <a href="#services">Услуги и&nbsp;цены</a>
-      <a href="#about">Обо мне</a>
+      <a href="#about">Опыт и&nbsp;подход</a>
       <a href="#reviews">Отзывы</a>
       <a href="#faq">Вопросы</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="header__actions">
       <a class="btn btn--sm" href="#contacts">Записаться</a>
-      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
-        <span class="menu-btn__bars" aria-hidden="true"></span>Меню
-      </button>
     </div>
   </div>
+  <nav class="mnav" aria-label="Разделы">
+    <a href="#services"><span>01</span>Услуги и&nbsp;цены</a>
+    <a href="#about"><span>02</span>Опыт и&nbsp;подход</a>
+    <a href="#reviews"><span>03</span>Отзывы</a>
+    <a href="#faq"><span>04</span>Вопросы</a>
+    <a href="#contacts"><span>05</span>Контакты</a>
+  </nav>
   <div class="progress" aria-hidden="true"></div>
 </header>
 
 <main>
   <!-- ───── 1. Знакомство ───── -->
   <section class="hero" aria-label="Знакомство">
-    <div class="container hero__grid">
+    <figure class="hero__photo">
+      <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1600" height="1500" fetchpriority="high">
+    </figure>
+    <div class="hero__panel">
       <div class="hero__intro">
-        <h1 class="hero__title"><span class="line"><span>Софья</span></span></h1>
-        <p class="hero__sub" data-reveal style="--i:1">Репетитор по&nbsp;русскому языку для учеников 3–11&nbsp;классов</p>
-        <ul class="hero__facts" data-reveal style="--i:2">
+        <h1 class="parse" data-reveal>
+          <span class="parse__row parse__row--subj"><span class="parse__w parse__w--one"><i>им. сущ.</i>Софья</span> —</span>
+          <span class="parse__row parse__row--pred"><span class="parse__w parse__w--two"><i>им. сущ.</i>репетитор</span></span>
+          <span class="parse__rest">по&nbsp;русскому языку для учеников 3–11&nbsp;классов</span>
+        </h1>
+        <ul class="hero__facts" data-reveal style="--i:1">
           <li>12&nbsp;лет преподавания</li>
-          <li>Подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ</li>
+          <li>Подготовка к&nbsp;ОГЭ, ЕГЭ и&nbsp;ВПР</li>
         </ul>
-        <div class="hero__cta" data-reveal style="--i:3">
-          <a class="btn" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost" href="video/sonya-16x9.mp4" data-video-open><svg class="i"><use href="#i-play"/></svg>Видео за&nbsp;50&nbsp;секунд</a>
+        <div class="hero__cta" data-reveal style="--i:2">
+          <a class="btn btn--peach" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost" href="video/sonya-16x9.mp4" data-video-open><svg class="i"><use href="#i-play"/></svg>Видеовизитка</a>
         </div>
       </div>
-
-      <figure class="portrait" data-reveal style="--i:1">
-        <div class="portrait__frame">
-          <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1600" height="1500" fetchpriority="high">
-        </div>
-      </figure>
-
-      <nav class="toc hero__toc" aria-label="Оглавление" data-reveal style="--i:4">
-        <p class="toc__title">Оглавление</p>
-        <ol>
-          <li><a href="#services"><span class="toc__num">01</span><span class="toc__label">Услуги и&nbsp;цены</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#about"><span class="toc__num">02</span><span class="toc__label">Обо мне</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#reviews"><span class="toc__num">03</span><span class="toc__label">Отзывы и&nbsp;результаты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#faq"><span class="toc__num">04</span><span class="toc__label">Частые вопросы</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#contacts"><span class="toc__num">05</span><span class="toc__label">Контакты</span><span class="toc__dots"></span><svg class="i"><use href="#i-arrow"/></svg></a></li>
-        </ol>
-      </nav>
     </div>
   </section>
 
   <!-- ───── 2. Услуги и цены ───── -->
-  <section class="section section--green" id="services">
+  <section class="section" id="services">
     <div class="container">
+      <div data-reveal>
+        <p class="label"><span class="label__num">01</span></p>
+        <h2 class="h2">Услуги и&nbsp;цены</h2>
+        <p class="lead">Работаю с&nbsp;учениками 3–11&nbsp;классов</p>
+      </div>
       <div class="services">
-        <div>
-          <div data-reveal>
-            <p class="label"><span class="label__num">01</span></p>
-            <h2 class="h2">Услуги и&nbsp;цены</h2>
-            <p class="lead">Работаю с&nbsp;учениками 3–11&nbsp;классов</p>
-          </div>
-          <ul class="checklist">
-            <li data-reveal><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Подготовка к&nbsp;ОГЭ, ЕГЭ и&nbsp;ВПР</li>
-            <li data-reveal style="--i:1"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Восполнение пробелов и&nbsp;помощь со&nbsp;школьной программой</li>
-            <li data-reveal style="--i:2"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Разбор сложных тем и&nbsp;подготовка к&nbsp;контрольным</li>
-            <li data-reveal style="--i:3"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Работа над сочинениями и&nbsp;изложениями</li>
-          </ul>
-        </div>
+        <ul class="checklist">
+          <li data-reveal><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Подготовка к&nbsp;ОГЭ, ЕГЭ и&nbsp;ВПР</li>
+          <li data-reveal style="--i:1"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Восполнение пробелов и&nbsp;помощь со&nbsp;школьной программой</li>
+          <li data-reveal style="--i:2"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Разбор сложных тем и&nbsp;подготовка к&nbsp;контрольным</li>
+          <li data-reveal style="--i:3"><span class="check"><svg class="i"><use href="#i-check"/></svg></span>Работа над сочинениями и&nbsp;изложениями</li>
+        </ul>
         <div class="price" data-reveal style="--i:1">
           <p class="price__label">Стоимость</p>
           <p class="price__value"><b>3&nbsp;000<span class="rub">₽</span></b><small>/ 60&nbsp;минут</small></p>
           <p class="price__note">Оплата по&nbsp;факту проведённого занятия</p>
-          <a class="btn" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--peach" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ───── 3. Обо мне (+ мои преимущества) ───── -->
-  <section class="section" id="about">
+  <!-- ───── 3. Опыт и подход ───── -->
+  <section class="section section--green" id="about">
     <div class="container">
       <div data-reveal>
         <p class="label"><span class="label__num">02</span></p>
-        <h2 class="h2">Обо мне</h2>
+        <h2 class="h2">Опыт и&nbsp;подход</h2>
       </div>
       <div class="about">
         <figure class="about__photo" data-reveal>
@@ -545,18 +540,17 @@
           <div class="stats" data-reveal>
             <div class="stat"><div class="stat__num" data-count="12">12</div><div class="stat__label">лет преподавания</div></div>
             <div class="stat"><div class="stat__num" data-count="100" data-suffix="+">100+</div><div class="stat__label">учеников</div></div>
-            <div class="stat"><div class="stat__num" data-count="97" data-from="91" data-prefix="91–">91–97</div><div class="stat__label">баллов на&nbsp;ЕГЭ у&nbsp;учеников</div></div>
+            <div class="stat"><div class="stat__num" data-count="97" data-prefix="до&nbsp;">до&nbsp;97</div><div class="stat__label">баллов на&nbsp;ЕГЭ&nbsp;— результаты моих учеников</div></div>
           </div>
           <ul class="dotlist" data-reveal>
             <li>Авторский курс по&nbsp;орфографии и&nbsp;пунктуации</li>
             <li>Собственные материалы для работы на&nbsp;уроке</li>
-            <li>Пишу и&nbsp;редактирую художественные тексты</li>
           </ul>
           <div data-reveal>
             <h3 class="about__sub">Мои преимущества</h3>
             <ul class="points">
-              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Учу понимать, а&nbsp;не&nbsp;зубрить.</b> Объясняю логику правил и&nbsp;задаю наводящие вопросы, чтобы ученик учился самостоятельно находить решение.</div></li>
-              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Без давления и&nbsp;страха ошибок.</b> Спокойно разбираем ошибки и&nbsp;возвращаемся к&nbsp;сложным темам столько, сколько нужно.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Учу понимать, а&nbsp;не&nbsp;зубрить.</b> Объясняю логику правил и&nbsp;задаю наводящие вопросы, чтобы ребёнок учился самостоятельно находить решение.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Без давления и&nbsp;страха ошибок.</b> Спокойно разбираем темы и&nbsp;возвращаемся к&nbsp;сложным моментам столько, сколько нужно.</div></li>
               <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Системная подготовка.</b> Последовательно закрываем пробелы, закрепляем теорию и&nbsp;отрабатываем её.</div></li>
               <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Гибкая система.</b> Подстраиваю объём занятий и&nbsp;формат домашних заданий под нагрузку и&nbsp;график ученика.</div></li>
             </ul>
@@ -575,12 +569,14 @@
       </div>
 
       <div class="carousel" data-carousel>
-        <div class="carousel__track" data-track tabindex="0" role="region" aria-label="Отзывы учеников, листайте вбок" data-reveal style="--i:1"></div>
+        <div class="carousel__stage" data-reveal style="--i:1">
+          <div class="carousel__track" data-track tabindex="0" role="region" aria-label="Отзывы учеников, листайте вбок"></div>
+          <button class="arrow arrow--over arrow--prev" type="button" data-prev aria-label="Предыдущий отзыв"><svg class="i"><use href="#i-arrow"/></svg></button>
+          <button class="arrow arrow--over arrow--next" type="button" data-next aria-label="Следующий отзыв"><svg class="i"><use href="#i-arrow"/></svg></button>
+        </div>
         <div class="carousel__controls" data-reveal style="--i:2">
-          <button class="arrow" type="button" data-prev aria-label="Предыдущий отзыв"><svg class="i"><use href="#i-arrow"/></svg></button>
           <div class="carousel__bar" aria-hidden="true"><span></span></div>
           <span class="carousel__count" aria-live="polite">01 / 05</span>
-          <button class="arrow" type="button" data-next aria-label="Следующий отзыв"><svg class="i"><use href="#i-arrow"/></svg></button>
         </div>
       </div>
     </div>
@@ -595,7 +591,7 @@
       </div>
       <div class="faq">
         <div class="faq__item" data-reveal>
-          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="q1" id="q1b">Есть ли бесплатное пробное?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="q1" id="q1b">Есть ли бесплатное пробное занятие?<span class="faq__icon" aria-hidden="true"></span></button></h3>
           <div class="faq__panel" id="q1" role="region" aria-labelledby="q1b"><div><p>Нет, но&nbsp;я&nbsp;могу провести оплачиваемое пробное занятие на&nbsp;30&nbsp;минут, чтобы понять, подходит&nbsp;ли вам мой формат.</p></div></div>
         </div>
         <div class="faq__item" data-reveal>
@@ -622,6 +618,7 @@
   <section class="section section--contacts" id="contacts">
     <div class="container">
       <div class="contact" data-reveal>
+        <div class="contact__main">
         <div>
           <p class="label"><span class="label__num">05</span></p>
           <h2 class="h2">Контакты</h2>
@@ -642,6 +639,8 @@
             <span class="link__go"><svg class="i"><use href="#i-arrow"/></svg></span>
           </a>
         </div>
+        </div>
+        <figure class="contact__photo"><img src="contact.jpg" alt="Софья у школы со справочником" width="880" height="1100" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -654,31 +653,7 @@
   </div>
 </footer>
 
-<!-- mobile menu -->
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Оглавление">
-  <div class="menu__top">
-    <a class="logo" href="#top" data-menu-close><span class="logo__name">Софья</span><span class="logo__role">Репетитор по русскому</span></a>
-    <button class="menu-btn" type="button" data-menu-close>Закрыть</button>
-  </div>
-  <nav class="toc" aria-label="Оглавление">
-    <p class="toc__title">Оглавление</p>
-    <ol>
-      <li style="--i:0"><a href="#services" data-menu-close><span class="toc__num">01</span><span class="toc__label">Услуги и&nbsp;цены</span><span class="toc__dots"></span></a></li>
-      <li style="--i:1"><a href="#about" data-menu-close><span class="toc__num">02</span><span class="toc__label">Обо мне</span><span class="toc__dots"></span></a></li>
-      <li style="--i:2"><a href="#reviews" data-menu-close><span class="toc__num">03</span><span class="toc__label">Отзывы</span><span class="toc__dots"></span></a></li>
-      <li style="--i:3"><a href="#faq" data-menu-close><span class="toc__num">04</span><span class="toc__label">Вопросы</span><span class="toc__dots"></span></a></li>
-      <li style="--i:4"><a href="#contacts" data-menu-close><span class="toc__num">05</span><span class="toc__label">Контакты</span><span class="toc__dots"></span></a></li>
-    </ol>
-  </nav>
-  <div class="menu__foot">
-    <a class="btn" href="https://t.me/+79134827379" target="_blank" rel="noopener">Написать в&nbsp;Telegram</a>
-    <a class="btn btn--ghost" href="tel:+79134827379">+7&nbsp;913&nbsp;482-73-79</a>
-  </div>
-</div>
-
-<div class="mcta" aria-hidden="true"><a class="btn btn--peach" href="#contacts" tabindex="-1">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a></div>
-
-<dialog class="vmodal" aria-label="Видео-знакомство">
+<dialog class="vmodal" aria-label="Видеовизитка">
   <button class="vmodal__close" type="button" aria-label="Закрыть видео">×</button>
   <video class="vmodal__video" controls playsinline preload="none"></video>
 </dialog>
@@ -796,34 +771,17 @@ const REVIEWS = [
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
   /* active section in the header nav */
-  const navLinks = [...document.querySelectorAll('.nav a')];
+  const navLinks = [...document.querySelectorAll('.nav a, .mnav a')];
   const spy = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (!en.isIntersecting) return;
       navLinks.forEach(a => a.setAttribute('aria-current', a.hash === '#' + en.target.id ? 'true' : 'false'));
+      // keep the active pill of the phone strip in view
+      const pill = document.querySelector(`.mnav a[href="#${en.target.id}"]`);
+      if (pill) pill.parentElement.scrollTo({ left: pill.offsetLeft - 20, behavior: reduce ? 'auto' : 'smooth' });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
-
-  /* mobile menu */
-  const menu = document.getElementById('menu');
-  const openBtn = document.querySelector('[data-menu-open]');
-  const setMenu = open => {
-    menu.classList.toggle('is-open', open);
-    document.body.classList.toggle('is-locked', open);
-    openBtn.setAttribute('aria-expanded', open);
-    if (open) menu.querySelector('[data-menu-close]').focus({ preventScroll: true });
-  };
-  openBtn.addEventListener('click', () => setMenu(true));
-  menu.querySelectorAll('[data-menu-close]').forEach(el => el.addEventListener('click', () => setMenu(false)));
-  addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false); });
-
-  /* sticky "записаться" on phones: after the hero, hidden over the contacts */
-  const mcta = document.querySelector('.mcta');
-  let pastHero = false, atContacts = false;
-  const sync = () => mcta.classList.toggle('is-on', pastHero && !atContacts);
-  new IntersectionObserver(([en]) => { pastHero = !en.isIntersecting; sync(); }).observe(document.querySelector('.hero__cta'));
-  new IntersectionObserver(([en]) => { atContacts = en.isIntersecting; sync(); }, { rootMargin: '0px 0px -10% 0px' }).observe(document.getElementById('contacts'));
 
   /* intro video in a popup: loads and plays only after the visitor asks for it */
   const vmodal = document.querySelector('.vmodal'), vid = vmodal.querySelector('video');
@@ -889,6 +847,10 @@ const REVIEWS = [
       <p class="review__caption">${esc(r.caption)}</p>
       ${r.note ? `<p class="review__note">${esc(r.note)}</p>` : ''}
     </article>`).join('');
+
+  const markMore = () => track.querySelectorAll('.chat').forEach(c => c.classList.toggle('is-more', c.scrollHeight - c.scrollTop - c.clientHeight > 8));
+  track.querySelectorAll('.chat').forEach(c => c.addEventListener('scroll', markMore, { passive: true }));
+  addEventListener('resize', markMore); requestAnimationFrame(markMore);
 
   const carousel = document.querySelector('[data-carousel]');
   const prev = carousel.querySelector('[data-prev]'), next = carousel.querySelector('[data-next]');
