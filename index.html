@@ -17,9 +17,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://vectozavr.github.io/sonya-ilina/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2325412F'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' fill='%23F6F1E7'%3EС%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="image" href="hero-m.jpg" media="(max-width: 639px)">
+<link rel="preload" as="image" href="hero.jpg" media="(min-width: 640px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
   :root {
@@ -38,7 +40,7 @@
     --peach-ink: #B0643C;
     --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --hand: "Caveat", cursive;
+    --brown: #2B1D17;  /* the dark of the wood behind her in the photo */
     --gutter: clamp(20px, 5vw, 48px);
     --bar: 64px;       /* logo row */
     --header: 110px;   /* logo row + section strip on phones and tablets */
@@ -132,7 +134,7 @@
   .mnav a[aria-current="true"] span { color: var(--peach); }
   @media (max-width: 639px) { .header__actions .btn { height: 38px; padding: 0 15px; font-size: 13.5px; } }
   @media (min-width: 1080px) { .nav { display: flex; } .mnav { display: none; } }
-  /* over the split hero the bar is transparent with light type */
+  /* over the hero photo the bar is transparent with light type */
   @media (min-width: 1100px) {
     .header:not(.is-scrolled) { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--on-green); }
     .header:not(.is-scrolled) .logo { text-shadow: 0 1px 14px rgba(0, 0, 0, .4); }
@@ -141,32 +143,36 @@
     .header:not(.is-scrolled) .btn { --b: var(--peach); --f: var(--green); }
   }
 
-  /* ───── hero: photo on the left (she looks to the right), text on green to the right ───── */
-  .hero { display: grid; padding-top: var(--header); background: var(--green); color: var(--on-green); }
-  .hero__photo { position: relative; margin: 0; aspect-ratio: 4 / 5; max-height: 60vh; overflow: hidden; background: #2b2b25; }
-  .hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 28%; transform: scale(1.04); transition: transform 1.8s var(--ease); }
-  .is-loaded .hero__photo img { transform: none; }
-  .hero__panel { padding: 44px var(--gutter) 60px; }
+  /* ───── hero: the photo dissolves into the brown of the wood behind her; text sits where she looks (right) ───── */
+  .hero { position: relative; display: grid; padding-top: var(--header); background: var(--brown); color: var(--on-green); overflow: hidden; }
+  .hero__photo { position: relative; margin: 0; height: min(54vh, 120vw); }
+  .hero__photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+  .hero__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(43, 29, 23, 0) 52%, rgba(43, 29, 23, .7) 80%, var(--brown) 99%); }
+  .hero__panel { position: relative; margin-top: -56px; padding: 0 var(--gutter) 56px; }
   @media (min-width: 640px) and (max-width: 1099px) {
-    .hero__photo { aspect-ratio: 3 / 2; max-height: none; }
-    .hero__panel { padding: 56px var(--gutter) 76px; }
+    .hero__photo { height: min(62vh, 64vw); }
+    .hero__photo img { object-position: 30% 28%; }
+    .hero__panel { padding: 0 var(--gutter) 72px; }
   }
   @media (min-width: 1100px) {
-    .hero { grid-template-columns: 1fr 1fr; min-height: min(100vh, 960px); padding-top: 0; }
-    .hero__photo { aspect-ratio: auto; max-height: none; }
-    .hero__photo img { object-position: 26% 30%; }
-    .hero__photo::after { content: ""; position: absolute; inset: 0 0 auto; height: 160px; background: linear-gradient(rgba(14, 22, 17, .45), rgba(14, 22, 17, 0)); }
-    .hero__panel { display: flex; align-items: center; padding: calc(var(--header) + 32px) clamp(48px, 5.5vw, 100px) 64px; }
+    .hero { display: flex; align-items: center; min-height: min(100vh, 960px); padding-top: 0; }
+    .hero__photo { position: absolute; inset: 0 auto 0 0; width: 66%; height: auto; }
+    .hero__photo img { object-position: 22% 30%; }
+    .hero__photo::after {
+      background: linear-gradient(90deg, rgba(43, 29, 23, 0) 44%, rgba(43, 29, 23, .78) 72%, var(--brown) 97%),
+                  linear-gradient(180deg, rgba(20, 13, 10, .5), rgba(20, 13, 10, 0) 18%);
+    }
+    .hero__panel { width: 100%; margin: 0; padding: calc(var(--header) + 28px) clamp(48px, 5.5vw, 100px) 48px 54%; }
   }
 
   /* «Софья — репетитор»: parsed like a sentence at school — subject one line, predicate two.
      Labels sit just above the real ink of each word (measured: «Софья» ink starts .08em below the
      top of its line box, lowercase «репетитор» .38em), underlines skip the descenders of ф and р. */
-  .parse { --fs-s: clamp(44px, 4.3vw, 64px); --fs-p: clamp(66px, 7.9vw, 124px); --gap: clamp(16px, 1.6vw, 24px); --lab: 33px; /* label height + its offset */ font-family: var(--serif); font-weight: 600; line-height: 1; letter-spacing: -.015em; }
+  .parse { --fs-s: clamp(44px, 4.3vw, 64px); --fs-p: clamp(66px, 7.4vw, 116px); --gap: clamp(14px, 1.4vw, 22px); --lab: 30px; /* label height + its offset */ font-family: var(--serif); font-weight: 600; line-height: 1; letter-spacing: -.015em; }
   .parse__row { display: block; }
   /* tablets: the text panel is full width, so the headline can be larger */
   @media (min-width: 640px) and (max-width: 1099px) { .parse { --fs-s: clamp(44px, 6vw, 60px); --fs-p: clamp(66px, 11.5vw, 116px); } }
-  .parse__row--subj { margin-top: 30px; font-size: var(--fs-s); }
+  .parse__row--subj { margin-top: 28px; font-size: var(--fs-s); }
   /* the same clear gap between the first line and the second label at every size */
   .parse__row--pred { margin-top: calc(var(--gap) + var(--lab) - var(--fs-p) * .38); font-size: var(--fs-p); }
   .parse__w {
@@ -174,24 +180,41 @@
     text-decoration-line: underline; text-decoration-color: var(--peach); text-decoration-skip-ink: auto;
   }
   .parse__w--one { --ink: calc(var(--fs-s) * .08); text-decoration-thickness: 3px; text-underline-offset: .15em; }
-  .parse__w--two { --ink: calc(var(--fs-p) * .38); text-decoration-style: double; text-decoration-thickness: 3px; text-underline-offset: .13em; }
+  /* predicate: two separate underlines (outer + inner span), far enough apart to read as two */
+  .parse__w--two { --ink: calc(var(--fs-p) * .38); text-decoration-thickness: 3px; text-underline-offset: .09em; }
+  .parse__u2 { text-decoration: underline var(--peach); text-decoration-thickness: 3px; text-underline-offset: .25em; text-decoration-skip-ink: auto; }
   .parse__w i {
     position: absolute; left: 50%; top: var(--ink); transform: translate(-50%, calc(-100% - 7px));
-    font: 700 26px/1 var(--hand); font-style: normal; letter-spacing: 0; color: var(--peach); white-space: nowrap;
+    font: italic 500 23px/1 var(--serif); letter-spacing: .01em; color: var(--peach); white-space: nowrap;
   }
-  .parse__rest { display: block; margin-top: 34px; max-width: 16em; font: italic 500 clamp(23px, 2.2vw, 31px)/1.25 var(--serif); letter-spacing: 0; color: var(--peach-2); text-wrap: balance; }
-  /* facts look like notes stuck on the page, not like buttons */
-  .hero__facts { list-style: none; padding: 0; margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px 16px; }
-  .hero__facts li { padding: 11px 18px 12px; border-radius: 2px; background: var(--peach-2); color: var(--ink); font: 700 25px/1.05 var(--hand); box-shadow: 0 12px 18px -12px rgba(0, 0, 0, .55); transform: rotate(-1.6deg); }
-  .hero__facts li:nth-child(2) { background: var(--on-green); transform: rotate(1.3deg); }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+  .parse__rest { display: block; margin-top: 40px; max-width: 16em; font: italic 500 clamp(23px, 2.2vw, 31px)/1.25 var(--serif); letter-spacing: 0; color: var(--peach-2); text-wrap: balance; }
+  /* facts are information blocks: square corners, no hover, no shadow — nothing that looks pressable */
+  .hero__facts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .fact { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-width: 150px; padding: 14px 18px 15px; border-radius: 4px; }
+  .fact b { font: 600 46px/.9 var(--serif); letter-spacing: -.01em; }
+  .fact span { font: 600 12px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .fact--a { background: var(--peach); color: #2B1D17; }
+  .fact--b { background: rgba(246, 241, 231, .07); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .2); }
+  .fact--b b { font-size: 34px; line-height: 1; }
+  .fact--b span { color: var(--on-green-2); }
+  /* ratings on Profi and Avito */
+  .ratings { list-style: none; padding: 22px 0 0; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 28px; border-top: 1px solid rgba(246, 241, 231, .16); }
+  .ratings li { display: flex; align-items: center; gap: 12px; }
+  .ratings b { font: 600 30px/1 var(--serif); }
+  .ratings small { display: block; font: 600 12px/1.35 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--on-green-2); }
+  .stars { position: relative; display: inline-block; width: 88px; height: 16px; flex: none; }
+  .stars svg { position: absolute; inset: 0; width: 88px; height: 16px; }
+  .stars .stars__on { position: absolute; inset: 0 auto 0 0; overflow: hidden; width: calc(var(--r) / 5 * 100%); }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
   .hero .btn--ghost { --f: var(--on-green); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .35); }
   .hero .btn--ghost:hover { --b: rgba(246, 241, 231, .08); box-shadow: inset 0 0 0 1px rgba(246, 241, 231, .5); }
   @media (max-width: 639px) {
-    .parse { --lab: 27px; }
-    .parse__w--one, .parse__w--two { text-decoration-thickness: 2.5px; }
-    .parse__w i { font-size: 22px; transform: translate(-50%, calc(-100% - 5px)); }
-    .hero__facts li { font-size: 22px; }
+    .parse { --lab: 25px; }
+    .parse__w--one, .parse__w--two, .parse__u2 { text-decoration-thickness: 2.5px; }
+    .parse__w i { font-size: 19px; transform: translate(-50%, calc(-100% - 5px)); }
+    .fact { min-width: 0; flex: 1 1 140px; }
+    .fact b { font-size: 40px; }
+    .fact--b b { font-size: 28px; }
     .hero__cta .btn { height: 50px; padding: 0 20px; font-size: 15px; }
   }
 
@@ -312,9 +335,9 @@
   .voice__wave { display: flex; align-items: center; gap: 2px; height: 20px; }
   .voice__wave i { width: 2px; border-radius: 2px; background: rgba(29, 52, 40, .38); }
   .voice__dur { font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .card__quote { flex: 1; position: relative; padding: 44px 20px 22px; max-height: clamp(240px, 100svh - 530px, 480px); overflow-y: auto; scrollbar-width: thin; }
+  .card__quote { flex: 1; position: relative; padding: 40px 20px 20px; }
   .card__quote::before { content: "«"; position: absolute; left: 18px; top: 4px; font: 500 54px/1 var(--serif); color: var(--peach); }
-  .card__quote p { font: italic 500 19px/1.38 var(--serif); color: var(--ink); text-wrap: pretty; }
+  .card__quote p { font: italic 500 18px/1.36 var(--serif); color: var(--ink); text-wrap: pretty; }
   .card__orig {
     display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%;
     padding: 13px 16px; border-top: 1px solid var(--line); background: rgba(251, 248, 242, .6);
@@ -406,7 +429,7 @@
   .contact { display: grid; gap: 40px; padding: clamp(28px, 5vw, 64px); border-radius: clamp(24px, 3vw, 36px); background: var(--paper); }
   .contact__main { display: grid; gap: 36px; align-content: center; }
   .contact__photo { margin: 0; overflow: hidden; border-radius: clamp(18px, 2.4vw, 26px); aspect-ratio: 4 / 5; background: var(--bg); }
-  .contact__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 20%; }
+  .contact__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; }
   @media (max-width: 959px) { .contact__photo { order: -1; aspect-ratio: 4 / 3.6; } }
   @media (min-width: 960px) {
     .contact { grid-template-columns: 1fr 380px; gap: 64px; }
@@ -434,7 +457,7 @@
   .footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 28px; border-top: 1px solid var(--line); }
   .footer a:hover { color: var(--ink); }
 
-  .lightbox { margin: auto; max-width: min(92vw, 560px); max-height: 92vh; padding: 0; border: 0; background: transparent; overflow: visible; }
+  .lightbox { margin: auto; max-width: min(94vw, 1280px); max-height: 92vh; padding: 0; border: 0; background: transparent; overflow: visible; }
   .lightbox::backdrop { background: rgba(18, 30, 23, .84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
   .lightbox img { max-height: calc(100vh - 140px); width: auto; margin: auto; border-radius: 16px; }
   .lightbox__close { position: fixed; top: 16px; right: 16px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--ink); font-size: 26px; line-height: 1; }
@@ -446,7 +469,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition-duration: .01ms !important; transition-delay: 0s !important; animation: none !important; }
-    .js [data-reveal], .hero__photo img { opacity: 1; transform: none; }
+    .js [data-reveal] { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -488,23 +511,30 @@
   <!-- ───── 1. Знакомство ───── -->
   <section class="hero" aria-label="Знакомство">
     <figure class="hero__photo">
-      <img src="photo.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="1600" height="1500" fetchpriority="high">
+      <picture>
+        <source media="(max-width: 639px)" srcset="hero-m.jpg" width="900" height="1200">
+        <img src="hero.jpg" alt="Софья, репетитор по русскому языку, за ноутбуком" width="2400" height="1800" fetchpriority="high">
+      </picture>
     </figure>
     <div class="hero__panel">
       <div class="hero__intro">
-        <h1 class="parse" data-reveal>
+        <h1 class="parse">
           <span class="parse__row parse__row--subj"><span class="parse__w parse__w--one"><i>им. сущ.</i>Софья</span> —</span>
-          <span class="parse__row parse__row--pred"><span class="parse__w parse__w--two"><i>им. сущ.</i>репетитор</span></span>
+          <span class="parse__row parse__row--pred"><span class="parse__w parse__w--two"><i>им. сущ.</i><span class="parse__u2">репетитор</span></span></span>
           <span class="parse__rest">по&nbsp;русскому языку для учеников 3–11&nbsp;классов</span>
         </h1>
-        <ul class="hero__facts" data-reveal style="--i:1">
-          <li>12&nbsp;лет преподавания</li>
-          <li>Подготовка к&nbsp;ОГЭ, ЕГЭ и&nbsp;ВПР</li>
-        </ul>
-        <div class="hero__cta" data-reveal style="--i:2">
+        <div class="hero__facts">
+          <p class="fact fact--a"><b>12</b><span>лет преподавания</span></p>
+          <p class="fact fact--b"><span>Подготовка к</span><b>ОГЭ, ЕГЭ и&nbsp;ВПР</b></p>
+        </div>
+        <div class="hero__cta">
           <a class="btn btn--peach" href="#contacts">Записаться на&nbsp;занятие <svg class="i"><use href="#i-arrow"/></svg></a>
           <a class="btn btn--ghost" href="video/sonya-16x9.mp4" data-video-open><svg class="i"><use href="#i-play"/></svg>Видеовизитка</a>
         </div>
+        <ul class="ratings" aria-label="Рейтинг на сервисах">
+          <li><span class="stars" style="--r:4.84" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span><b>4,84</b><small>рейтинг<br>на&nbsp;Профи.ру</small></li>
+          <li><span class="stars" style="--r:5" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span><b>5,0</b><small>рейтинг<br>на&nbsp;Авито</small></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -551,10 +581,6 @@
             <div class="stat"><div class="stat__num" data-count="100" data-suffix="+">100+</div><div class="stat__label">учеников</div></div>
             <div class="stat"><div class="stat__num" data-count="97" data-prefix="до&nbsp;">до&nbsp;97</div><div class="stat__label">баллов на&nbsp;ЕГЭ&nbsp;— результаты моих учеников</div></div>
           </div>
-          <ul class="dotlist" data-reveal>
-            <li>Авторский курс по&nbsp;орфографии и&nbsp;пунктуации</li>
-            <li>Собственные материалы для работы на&nbsp;уроке</li>
-          </ul>
           <div data-reveal>
             <h3 class="about__sub">Мои преимущества</h3>
             <ul class="points">
@@ -562,6 +588,7 @@
               <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Без давления и&nbsp;страха ошибок.</b> Спокойно разбираем темы и&nbsp;возвращаемся к&nbsp;сложным моментам столько, сколько нужно.</div></li>
               <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Системная подготовка.</b> Последовательно закрываем пробелы, закрепляем теорию и&nbsp;отрабатываем её.</div></li>
               <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Гибкая система.</b> Подстраиваю объём занятий и&nbsp;формат домашних заданий под нагрузку и&nbsp;график ученика.</div></li>
+              <li><span class="check"><svg class="i"><use href="#i-check"/></svg></span><div><b>Авторский курс по&nbsp;орфографии и&nbsp;пунктуации.</b> Собственные материалы для работы на&nbsp;уроке.</div></li>
             </ul>
           </div>
         </div>
@@ -585,7 +612,7 @@
         </div>
         <div class="carousel__controls" data-reveal style="--i:2">
           <div class="carousel__bar" aria-hidden="true"><span></span></div>
-          <span class="carousel__count" aria-live="polite">01 / 05</span>
+          <span class="carousel__count" aria-live="polite">01 / 07</span>
         </div>
       </div>
     </div>
@@ -644,12 +671,12 @@
             <span class="link__go"><svg class="i"><use href="#i-arrow"/></svg></span>
           </a>
           <a class="link" href="tel:+79134827379">
-            <span><span class="link__k">Телефон</span><span class="link__v">+7&nbsp;913&nbsp;482-73-79</span></span>
+            <span><span class="link__k">Телефон</span><span class="link__v">+7&nbsp;913&nbsp;482&nbsp;73&nbsp;79</span></span>
             <span class="link__go"><svg class="i"><use href="#i-arrow"/></svg></span>
           </a>
         </div>
         </div>
-        <figure class="contact__photo"><img src="contact.jpg" alt="Софья у школы со справочником" width="880" height="1100" loading="lazy"></figure>
+        <figure class="contact__photo"><img src="contact.jpg" alt="Софья у школы со справочником" width="960" height="1200" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -726,6 +753,16 @@ const REVIEWS = [
     type: "quote", caption: "С «3» до «4» за четверть", note: "",
     author: "Ольга", meta: "мама ученицы", original: "reviews/review-3-4.jpg",
     text: "Замечательный репетитор, у ребенка есть результат: раньше итоговая оценка была «3», в этой четверти уже «4». Дочери нравится заниматься, на уроках они устраняют пробелы, повторяют непонятные темы, Софья Евгеньевна учит Анастасию писать сочинения.",
+  },
+  {
+    type: "quote", caption: "«Такую учительницу нам бы в школу»", note: "",
+    author: "Марина", meta: "10 ноября 2017", original: "reviews/review-marina.jpg",
+    text: "Очень ответственная, внимательная, объясняет материал очень интересно, доступно и понятно, такую учительницу нам бы в школу, не было бы проблем у детей с русским языком. СПАСИБО БОЛЬШОЕ Софье Евгеньевне за знания.",
+  },
+  {
+    type: "quote", caption: "Подготовка к ОГЭ", note: "",
+    author: "Татьяна", meta: "20 апреля 2017", original: "reviews/review-tatiana.jpg",
+    text: "Софья занимается подготовкой к ОГЭ с моим сыном пока один месяц. Общаться с Софьей легко и сыну и мне, она очень позитивна, дружелюбна и знает свое дело! Спасибо!!!",
   },
 ];
 
@@ -879,10 +916,11 @@ const REVIEWS = [
   // each click moves exactly one card, even if clicked again mid-animation
   let target = null, settle;
   const go = dir => {
-    const s = step(), last = Math.round((track.scrollWidth - track.clientWidth) / s);
-    const base = target ?? Math.round(track.scrollLeft / s);
+    // the end of the track is not a whole number of cards away: the last step goes to the very end
+    const s = step(), max = track.scrollWidth - track.clientWidth, last = Math.ceil((max - 2) / s);
+    const base = target ?? (track.scrollLeft >= max - 4 ? last : Math.round(track.scrollLeft / s));
     target = Math.max(0, Math.min(last, base + dir));
-    track.scrollTo({ left: target * s, behavior: 'smooth' });
+    track.scrollTo({ left: Math.min(target * s, max), behavior: 'smooth' });
   };
   prev.addEventListener('click', () => go(-1));
   next.addEventListener('click', () => go(1));
