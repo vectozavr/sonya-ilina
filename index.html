@@ -52,7 +52,7 @@
   /* lining figures everywhere: Cormorant defaults to old-style, and the `font` shorthand would reset a normal declaration */
   *, *::before, *::after { font-feature-settings: "kern", "liga", "lnum" !important; }
   * { margin: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header) + 8px); -webkit-text-size-adjust: 100%; }
+  html { scroll-behavior: smooth; scroll-padding-top: var(--header); -webkit-text-size-adjust: 100%; }
   body {
     background: var(--bg); color: var(--ink);
     font: 400 17px/1.6 var(--sans);
@@ -162,7 +162,7 @@
       background: linear-gradient(90deg, rgba(43, 29, 23, 0) 44%, rgba(43, 29, 23, .78) 72%, var(--brown) 97%),
                   linear-gradient(180deg, rgba(20, 13, 10, .5), rgba(20, 13, 10, 0) 18%);
     }
-    .hero__panel { width: 100%; margin: 0; padding: calc(var(--header) + 28px) clamp(48px, 5.5vw, 100px) 48px 54%; }
+    .hero__panel { width: 100%; margin: 0; padding: calc(var(--header) + 28px) clamp(48px, 5.5vw, 100px) 32px 54%; }
   }
 
   /* «Софья — репетитор»: parsed like a sentence at school — subject one line, predicate two.
@@ -198,10 +198,12 @@
   .fact--b b { font-size: 34px; line-height: 1; }
   .fact--b span { color: var(--on-green-2); }
   /* ratings on Profi and Avito */
-  .ratings { list-style: none; padding: 22px 0 0; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 28px; border-top: 1px solid rgba(246, 241, 231, .16); }
-  .ratings li { display: flex; align-items: center; gap: 12px; }
+  .ratings { list-style: none; padding: 20px 0 0; margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px 36px; border-top: 1px solid rgba(246, 241, 231, .16); }
+  .ratings li { display: flex; align-items: center; gap: 14px; }
+  .ratings__logo { width: 42px; height: 42px; flex: none; }
+  .ratings__score { display: flex; align-items: center; gap: 10px; }
   .ratings b { font: 600 30px/1 var(--serif); }
-  .ratings small { display: block; font: 600 12px/1.35 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--on-green-2); }
+  .ratings small { display: block; margin-top: 5px; font: 600 11.5px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: var(--on-green-2); }
   .stars { position: relative; display: inline-block; width: 88px; height: 16px; flex: none; }
   .stars svg { position: absolute; inset: 0; width: 88px; height: 16px; }
   .stars .stars__on { position: absolute; inset: 0 auto 0 0; overflow: hidden; width: calc(var(--r) / 5 * 100%); }
@@ -219,7 +221,7 @@
   }
 
   /* ───── sections ───── */
-  .section { position: relative; padding: clamp(76px, 10vw, 140px) 0; }
+  .section { position: relative; padding: clamp(48px, 5.6vw, 80px) 0 clamp(64px, 7.6vw, 108px); }
   .section--green { background: var(--green); color: var(--on-green); }
   .section--green .label { color: var(--peach-2); }
   .section--green .label__num { color: var(--peach); }
@@ -480,7 +482,7 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.6 4.4 4.4L19 7.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
-<header class="header" id="top">
+<header class="header">
   <div class="container header__inner">
     <a class="logo" href="#top" aria-label="Софья — в начало страницы">
       <span class="logo__name">Софья</span>
@@ -532,8 +534,8 @@
           <a class="btn btn--ghost" href="video/sonya-16x9.mp4" data-video-open><svg class="i"><use href="#i-play"/></svg>Видеовизитка</a>
         </div>
         <ul class="ratings" aria-label="Рейтинг на сервисах">
-          <li><span class="stars" style="--r:4.84" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span><b>4,84</b><small>рейтинг<br>на&nbsp;Профи.ру</small></li>
-          <li><span class="stars" style="--r:5" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span><b>5,0</b><small>рейтинг<br>на&nbsp;Авито</small></li>
+          <li><svg class="ratings__logo" viewBox="0 0 152 152" aria-hidden="true"><rect width="152" height="152" rx="34" fill="#E81634"/><circle cx="76" cy="54" r="28" fill="#fff"/><rect x="20" y="94" width="112" height="32" fill="#fff"/></svg><span><span class="ratings__score"><b>4,84</b><span class="stars" style="--r:4.84" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span></span><small>рейтинг на&nbsp;Профи.ру</small></span></li>
+          <li><svg class="ratings__logo" viewBox="0 0 152 152" aria-hidden="true"><rect width="152" height="152" rx="34" fill="#fff"/><circle cx="44.2" cy="44.3" r="25.5" fill="#00AAFF"/><circle cx="101.3" cy="44.4" r="20" fill="#FF6062"/><circle cx="101.3" cy="101.4" r="31" fill="#96CF25"/><circle cx="44.1" cy="101.4" r="14.5" fill="#A069F7"/></svg><span><span class="ratings__score"><b>5,0</b><span class="stars" style="--r:5" aria-hidden="true"><svg viewBox="0 0 88 16" fill="rgba(246,241,231,.22)" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg><span class="stars__on"><svg viewBox="0 0 88 16" fill="#F0B596" aria-hidden="true"><g transform="translate(0 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(18 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(36 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(54 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g><g transform="translate(72 0)"><path d="M8 1.2l1.9 4.2 4.6.5-3.4 3.1 1 4.5L8 11.2 3.9 13.5l1-4.5L1.5 5.9l4.6-.5z"/></g></svg></span></span></span><small>рейтинг на&nbsp;Авито</small></span></li>
         </ul>
       </div>
     </div>
